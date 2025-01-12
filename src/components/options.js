@@ -215,6 +215,7 @@ export const DevOptions = [
   "Lonewolf's Whisper",
   "Butterfly's Emissary",
   'By the Wind',
+  'Polar Jelly',
   'Dr. Teddy',
   'Enchanting Void',
   'Festering Gel',
