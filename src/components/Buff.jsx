@@ -66,7 +66,7 @@ const Buff = forwardRef(({ onSave, onLoad }, ref) => {
             height: '35px',
           }}
         >
-          <Typography sx={{ fontSize: '0.9rem' }}>Deviation</Typography>
+          <Typography sx={{ fontSize: '0.9rem' }}>Combat Deviation</Typography>
         </Box>
       </Box>
 
