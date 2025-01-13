@@ -11,25 +11,30 @@ const CustomAutocomplete = ({
   selectedItems,
 }) => {
   // Function to highlight the matching text
-  const getHighlightedText = (text = '', highlight) => {
-    const safeText = String(text); // Ensure text is a string
-    const parts = safeText.split(new RegExp(`(${highlight})`, 'gi'));
-    return parts.map((part, index) => (
-      <span
-        key={index}
-        style={{
-          fontWeight:
-            part.toLowerCase() === highlight.toLowerCase() ? 'bold' : 'normal',
-          color:
-            part.toLowerCase() === highlight.toLowerCase()
-              ? '#977d4c'
-              : '#ffffff',
-        }}
-      >
-        {part}
-      </span>
-    ));
-  };
+const getHighlightedText = (text = '', highlight = '') => {
+  if (!highlight) return text; // Return the full text if no highlight is provided
+
+  const safeText = String(text); // Ensure the input is a string
+  const parts = safeText.split(new RegExp(`(${highlight})`, 'gi'));
+
+  return parts.map((part, index) => (
+    <span
+      key={index}
+      style={{
+        fontWeight:
+          part.toLowerCase() === highlight.toLowerCase() ? 'bold' : 'normal',
+        color:
+          part.toLowerCase() === highlight.toLowerCase()
+            ? '#977d4c'
+            : '#ffffff',
+        whiteSpace: 'pre', // Preserve spaces
+      }}
+    >
+      {part}
+    </span>
+  ));
+};
+
 
   return (
     <Autocomplete
