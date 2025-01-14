@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid'; // Install uuid library
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share'; // Import the share icon
 import html2canvas from 'html2canvas'; // Import the library
@@ -181,22 +182,18 @@ const generateShareUrl = async (fileName) => {
 
   if (!fileData) return;
 
-  let urls = { ...fileUrls };
+  const uniqueId = uuidv4(); // Generate a unique ID
+  const uniqueFileName = `${fileName}_${uniqueId}`; // Combine file name with unique ID
 
-  // Check if URL already exists
-  if (!urls[fileName]) {
-    const fileDocRef = doc(db, 'sharedFiles', fileName);
-    await setDoc(fileDocRef, { data: fileData });
-    const shareableUrl = `${baseUrl}?file=${fileName}`;
-    urls[fileName] = shareableUrl;
+  const fileDocRef = doc(db, 'sharedFiles', uniqueFileName);
+  await setDoc(fileDocRef, { data: fileData });
+  const shareableUrl = `${baseUrl}?file=${uniqueFileName}`;
 
-    // Save URL to local storage
-    localStorage.setItem('fileUrls', JSON.stringify(urls));
-    setFileUrls(urls);
-  }
+  const urls = { ...fileUrls, [uniqueFileName]: shareableUrl };
+  localStorage.setItem('fileUrls', JSON.stringify(urls));
+  setFileUrls(urls);
 
-  // Copy the URL to the clipboard
-  navigator.clipboard.writeText(urls[fileName]);
+  navigator.clipboard.writeText(shareableUrl);
   alert('Shareable URL copied to clipboard!');
 };
 
