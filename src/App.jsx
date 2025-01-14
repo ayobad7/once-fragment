@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import ShareIcon from '@mui/icons-material/Share'; // Import Share Icon
 import html2canvas from 'html2canvas'; // Import the library
 import { toPng } from 'html-to-image';
 import Weapon from './components/Weapon';
@@ -114,6 +115,22 @@ const handleSnap = async () => {
   }
 };
 
+const [fileUrls, setFileUrls] = useState({}); // Store generated URLs
+
+const handleShare = (fileName) => {
+  // Check if a URL is already generated
+  if (!fileUrls[fileName]) {
+    const url = `${window.location.origin}/load?file=${encodeURIComponent(
+      fileName
+    )}`;
+    setFileUrls((prev) => ({ ...prev, [fileName]: url }));
+    navigator.clipboard.writeText(url);
+    alert(`URL copied to clipboard: ${url}`);
+  } else {
+    navigator.clipboard.writeText(fileUrls[fileName]);
+    alert(`URL copied to clipboard: ${fileUrls[fileName]}`);
+  }
+};
 
   return (
     <Box id='content-area'>
@@ -277,11 +294,11 @@ const handleSnap = async () => {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                bgcolor: '#131414', // Dark background
-                color: 'white', // White text
+                bgcolor: '#131414',
+                color: 'white',
                 boxShadow: 24,
                 p: 4,
-                borderRadius: 0, // No rounded corners
+                borderRadius: 0,
                 textAlign: 'center',
                 width: '300px',
               }}
@@ -296,11 +313,25 @@ const handleSnap = async () => {
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      border: '1px solid #4cbda4', // Darker border for dark mode
-                      borderRadius: 0, // No rounded corners
+                      border: '1px solid #4cbda4',
+                      borderRadius: 0,
                       overflow: 'hidden',
                     }}
                   >
+                    {/* Share Button */}
+                    <Button
+                      onClick={() => handleShare(name)}
+                      sx={{
+                        minWidth: '40px',
+                        padding: 0,
+                        backgroundColor: '',
+                        '&:hover': { backgroundColor: '#1e3c36' },
+                        color: '#06dbc7',
+                      }}
+                    >
+                      <ShareIcon />
+                    </Button>
+
                     {/* File Name Button */}
                     <Button
                       onClick={() => handleLoad(name)}
@@ -308,12 +339,12 @@ const handleSnap = async () => {
                         flex: 1,
                         textAlign: 'left',
                         justifyContent: 'flex-start',
-                        color: '#47b7a0', // White text for dark mode
+                        color: '#47b7a0',
                         background: '#15332c',
                         boxShadow: 'none',
-                        borderRadius: 0, // No rounded corners
+                        borderRadius: 0,
                         padding: '8px 16px',
-                        '&:hover': { backgroundColor: '#255f53' }, // Hover effect for dark mode
+                        '&:hover': { backgroundColor: '#255f53' },
                       }}
                     >
                       {name}
@@ -324,33 +355,27 @@ const handleSnap = async () => {
                       onClick={() => {
                         const updatedFiles = { ...savedFiles };
                         delete updatedFiles[name];
+                        setSavedFiles(updatedFiles);
                         localStorage.setItem(
                           'savedFiles',
                           JSON.stringify(updatedFiles)
                         );
-                        setSavedFiles(updatedFiles);
                       }}
                       sx={{
-                        width: '48px',
-                        minWidth: '48px',
-                        background: 'none',
-                        boxShadow: 'none',
-                        borderRadius: 0, // No rounded corners
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        minWidth: '40px',
+                        padding: 0,
+                        backgroundColor: '',
+                        '&:hover': { backgroundColor: '#4a1212' },
                         color: 'white',
-                        '&:hover': { backgroundColor: '#255f53' }, // Hover effect for dark mode
                       }}
                     >
-                      <CloseIcon fontSize='small' />
+                      <CloseIcon />
                     </Button>
                   </Box>
                 ))}
               </Box>
             </Box>
           </Modal>
-
           {/* Your Components */}
 
           <Box
