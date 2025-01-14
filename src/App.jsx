@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share'; // Import the share icon
 import html2canvas from 'html2canvas'; // Import the library
@@ -46,6 +46,8 @@ const theme = createTheme({
     fontFamily: 'Figtree, sans-serif',
   },
 });
+
+
 
 function App() {
   const [savedFiles, setSavedFiles] = useState(() => {
@@ -95,6 +97,39 @@ function App() {
     setFileName('');
   };
 
+useEffect(() => {
+  const loadSharedFile = async () => {
+    const sharedFileName = getQueryParam('file'); // Get 'file' query parameter
+    if (sharedFileName) {
+      try {
+        const fileDocRef = doc(db, 'sharedFiles', sharedFileName);
+        const fileSnap = await getDoc(fileDocRef);
+
+        if (fileSnap.exists()) {
+          const fileData = fileSnap.data().data;
+          // Load the fetched data into the form
+          weaponRef.current?.loadData(fileData.weaponData);
+          weapon2Ref.current?.loadData(fileData.weapon2Data);
+          cradleRef.current?.loadData(fileData.cradleData);
+          buffRef.current?.loadData(fileData.buffData);
+          helmetRef.current?.loadData(fileData.helmetData);
+          faceRef.current?.loadData(fileData.faceData);
+          glovesRef.current?.loadData(fileData.glovesData);
+          topRef.current?.loadData(fileData.topData);
+          bottomsRef.current?.loadData(fileData.bottomsData);
+          shoesRef.current?.loadData(fileData.shoesData);
+        } else {
+          console.error('Shared file not found in Firestore.');
+        }
+      } catch (error) {
+        console.error('Failed to load shared file:', error);
+      }
+    }
+  };
+
+  loadSharedFile();
+}, []);
+
   const handleLoad = (selectedFile) => {
     const {
       weaponData,
@@ -121,6 +156,10 @@ function App() {
     setLoadModalOpen(false);
   };
 
+  const getQueryParam = (param) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  };
 const handleSnap = async () => {
   try {
     const node = document.querySelector('#content-area'); // Adjust the selector to target the area to capture
