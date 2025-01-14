@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import ShareIcon from '@mui/icons-material/Share'; // Import the share icon
 import html2canvas from 'html2canvas'; // Import the library
 import { toPng } from 'html-to-image';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import Weapon from './components/Weapon';
 import Weapon2 from './components/Weapon2';
 import Helmet from './components/Helmet';
@@ -24,6 +27,20 @@ import {
 } from '@mui/material';
 import '@fontsource/figtree';
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBa3bpn_-864NVUBoSxO7i7WXYCZ6ia29w",
+  authDomain: "once-fragment.firebaseapp.com",
+  projectId: "once-fragment",
+  storageBucket: "once-fragment.firebasestorage.app",
+  messagingSenderId: "472769682297",
+  appId: "1:472769682297:web:a57d4dac5b2677d88e6da8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Figtree, sans-serif',
@@ -34,6 +51,11 @@ function App() {
   const [savedFiles, setSavedFiles] = useState(() => {
     const files = localStorage.getItem('savedFiles');
     return files ? JSON.parse(files) : {};
+  });
+
+  const [fileUrls, setFileUrls] = useState(() => {
+    const urls = localStorage.getItem('fileUrls');
+    return urls ? JSON.parse(urls) : {};
   });
 
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
@@ -112,6 +134,31 @@ const handleSnap = async () => {
   } catch (error) {
     console.error('Failed to capture screenshot:', error);
   }
+};
+
+const generateShareUrl = async (fileName) => {
+  const baseUrl = 'https://fragment-lake.vercel.app/';
+  const fileData = savedFiles[fileName];
+
+  if (!fileData) return;
+
+  let urls = { ...fileUrls };
+
+  // Check if URL already exists
+  if (!urls[fileName]) {
+    const fileDocRef = doc(db, 'sharedFiles', fileName);
+    await setDoc(fileDocRef, { data: fileData });
+    const shareableUrl = `${baseUrl}?file=${fileName}`;
+    urls[fileName] = shareableUrl;
+
+    // Save URL to local storage
+    localStorage.setItem('fileUrls', JSON.stringify(urls));
+    setFileUrls(urls);
+  }
+
+  // Copy the URL to the clipboard
+  navigator.clipboard.writeText(urls[fileName]);
+  alert('Shareable URL copied to clipboard!');
 };
 
 
@@ -319,6 +366,25 @@ const handleSnap = async () => {
                       {name}
                     </Button>
 
+                    {/* Share Button */}
+                    <Button
+                      onClick={() => generateShareUrl(name)}
+                      sx={{
+                        width: '48px',
+                        minWidth: '48px',
+                        background: 'none',
+                        boxShadow: 'none',
+                        borderRadius: 0,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: 'white',
+                        '&:hover': { backgroundColor: '#255f53' },
+                      }}
+                    >
+                      <ShareIcon fontSize='small' />
+                    </Button>
+
                     {/* Delete Button */}
                     <Button
                       onClick={() => {
@@ -329,6 +395,14 @@ const handleSnap = async () => {
                           JSON.stringify(updatedFiles)
                         );
                         setSavedFiles(updatedFiles);
+                        // Remove associated URL
+                        const updatedUrls = { ...fileUrls };
+                        delete updatedUrls[name];
+                        localStorage.setItem(
+                          'fileUrls',
+                          JSON.stringify(updatedUrls)
+                        );
+                        setFileUrls(updatedUrls);
                       }}
                       sx={{
                         width: '48px',
