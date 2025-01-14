@@ -319,7 +319,7 @@ export const fmodOptions = [
   { category: 'Unstable Bomber', title: 'Delayed Blast' },
   { category: 'Shrapnel', title: 'Explosive Shrapnel' },
   { category: 'Shrapnel', title: 'Shrapnel Carnage' },
-  { category: 'Fast Gunner', title: 'Gunslinger' },
+  { category: 'Fast Gunner', title: 'Explosive Barrage' },
   { category: 'Fast Gunner', title: 'Blitzkrieg' },
   { category: 'Bull Eye', title: 'Targeted Strike' },
   { category: 'Bull Eye', title: 'Most Wanted' },
