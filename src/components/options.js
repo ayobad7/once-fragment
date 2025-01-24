@@ -447,4 +447,8 @@ export const hideOptions = [
   'Sealskin',
   'Reindeer Hide',
   'Rawhide',
+  'Lunar Deer Hide',
+  'Lunar Wolf Skin',
+  'Lunar Rabbit Fur',
+  'Lunar Wool',
 ];
