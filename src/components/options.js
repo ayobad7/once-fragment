@@ -142,6 +142,7 @@ export const effectOptions = [
   'Blast DMG',
   'UB Trigger Chance',
   'UB Crit DMG',
+  'UB Range',
   'When in FG Crit DMG',
   'When in FG Weakspot DMG',
   'Bounce Crit DMG',
