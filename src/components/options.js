@@ -215,6 +215,7 @@ export const cradleOptions = [
   'Heavy Strike',
   'Transient Impact',
   'Brawl Boost',
+  'Resilience',
 ];
 export const DevOptions = [
   "Lonewolf's Whisper",
@@ -316,7 +317,7 @@ export const fmodOptions = [
   { category: 'Frost Vortex', title: 'Obliteration' },
   { category: 'Power Surge', title: 'Thunderclap' },
   { category: 'Power Surge', title: 'First Electrocution' },
-  { category: 'Unstable Bomber', title: 'Point Detonation' },
+  { category: 'Unstable Bomber', title: 'Pinpoint Strike' },
   { category: 'Unstable Bomber', title: 'Delayed Blast' },
   { category: 'Shrapnel', title: 'Explosive Shrapnel' },
   { category: 'Shrapnel', title: 'Shrapnel Carnage' },
@@ -362,6 +363,7 @@ export const tmodOptions = [
   'Weakspot DMG Boost',
   'Crit DMG Enhancement',
   'Munitions Amplifier',
+  'Flame Resonance',
   'Resist Advantage',
   'Head Guard',
   'Healing Fortification',
@@ -392,6 +394,7 @@ export const bmodOptions = [
   'Three Strikes',
   'Elemental Resonance',
   'Critical Surge',
+  'Flame Resonance',
 ];
 export const shoesOptions = [
   { category: 'Key', title: 'Hard Tactical Boots' },
