@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'; // Install uuid library
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share'; // Import the share icon
 import html2canvas from 'html2canvas'; // Import the library
+import Timer from './Timer'; // Import Timer component
 import { toPng } from 'html-to-image';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
@@ -25,6 +26,10 @@ import {
   Modal,
   createTheme,
   ThemeProvider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import '@fontsource/figtree';
 
@@ -47,8 +52,6 @@ const theme = createTheme({
     fontFamily: 'Figtree, sans-serif',
   },
 });
-
-
 
 function App() {
   const [savedFiles, setSavedFiles] = useState(() => {
@@ -197,6 +200,7 @@ const generateShareUrl = async (fileName) => {
   alert('Shareable URL copied to clipboard!');
 };
 
+const [open, setOpen] = useState(false);
 
   return (
     <Box id='content-area'>
@@ -274,6 +278,42 @@ const generateShareUrl = async (fileName) => {
             >
               Snap
             </Button>
+
+            <Button
+              variant='contained'
+              onClick={() => setOpen(true)}
+              sx={{
+                borderRadius: 0, // Remove rounded corners
+                width: '120px', // Fixed width for the button
+                boxShadow: 'none', // Remove shadow
+                backgroundColor: '#06dbc7', // Custom background color
+                fontWeight: 'bold',
+                color: 'black', // Text color
+                '&:hover': {
+                  backgroundColor: '#127a72', // Slightly darker color on hover
+                },
+              }}
+            >
+              Event
+            </Button>
+            <Drawer anchor='left' open={open} onClose={() => setOpen(false)}>
+              <Box
+                sx={{
+                  width: 700,
+                  padding: 2,
+                  bgcolor: '#252a2b',
+                  height: '100vh',
+                  color: 'white',
+                  display: 'flex', // Enables flexbox
+                  flexDirection: 'column', // Stacks items vertically
+                 
+                  alignItems: 'center', // Centers content horizontally
+                }}
+              >
+                <h3>Timer</h3>
+                <Timer /> {/* Display the Timer inside Drawer */}
+              </Box>
+            </Drawer>
           </Box>
 
           <Modal open={isSaveModalOpen} onClose={() => setSaveModalOpen(false)}>
