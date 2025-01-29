@@ -118,11 +118,11 @@ const TimerRow = ({ title, index }) => {
             borderRadius: 0,
             width: '120px',
             boxShadow: 'none',
-            backgroundColor: '#1b4e47',
+            backgroundColor: timeLeft === 0 ? '#d32f2f' : '#1b4e47', // Red when time is 0
             fontWeight: 'bold',
-            color: '#06dbc7',
+            color: timeLeft === 0 ? '#fff' : '#06dbc7', // White text on red
             '&:hover': {
-              backgroundColor: '#1e3230',
+              backgroundColor: timeLeft === 0 ? '#b71c1c' : '#1e3230', // Darker red on hover
             },
           }}
         >
