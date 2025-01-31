@@ -155,7 +155,7 @@ const Timer = () => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: 550,
+        maxWidth: 500,
         margin: '0 auto',
         padding: '16px',
         bgcolor: '#252a2b',

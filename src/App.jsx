@@ -309,7 +309,7 @@ const [open, setOpen] = useState(false);
               onClose={() => setOpen(false)}
               PaperProps={{
                 sx: {
-                  width: 600,
+                  width: 580,
                   transition: 'transform 0.3s ease',
                   backgroundColor: '#252a2b',
                   boxShadow: 24,
@@ -318,7 +318,7 @@ const [open, setOpen] = useState(false);
             >
               <Box
                 sx={{
-                  width: 640,
+                  width: 580,
                   height: '100vh',
                   padding: 2,
                   color: 'white',
