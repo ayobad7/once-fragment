@@ -318,7 +318,7 @@ const [open, setOpen] = useState(false);
             >
               <Box
                 sx={{
-                  width: 600,
+                  width: 640,
                   height: '100vh',
                   padding: 2,
                   color: 'white',
