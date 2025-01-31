@@ -27,10 +27,10 @@ import {
   createTheme,
   ThemeProvider,
   Drawer,
-  List,
-  ListItem,
-  ListItemText
+  IconButton,
 } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import '@fontsource/figtree';
 
 // Your web app's Firebase configuration
@@ -279,39 +279,56 @@ const [open, setOpen] = useState(false);
               Snap
             </Button>
 
-            <Button
-              variant='contained'
-              onClick={() => setOpen(true)}
+            {/* Add this absolutely positioned toggle button */}
+            <IconButton
+              onClick={() => setOpen(!open)}
               sx={{
-                borderRadius: 0, // Remove rounded corners
-                width: '120px', // Fixed width for the button
-                boxShadow: 'none', // Remove shadow
-                backgroundColor: '#06dbc7', // Custom background color
-                fontWeight: 'bold',
-                color: 'black', // Text color
+                position: 'fixed',
+                left: 0,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1300,
+                backgroundColor: '#06dbc7',
+                borderRadius: '0 0 0 0',
                 '&:hover': {
-                  backgroundColor: '#127a72', // Slightly darker color on hover
+                  backgroundColor: '#127a72',
                 },
               }}
             >
-              Event
-            </Button>
-            <Drawer anchor='left' open={open} onClose={() => setOpen(false)}>
+              {open ? (
+                <ChevronLeftIcon sx={{ color: 'black' }} />
+              ) : (
+                <ChevronRightIcon sx={{ color: 'black' }} />
+              )}
+            </IconButton>
+
+            {/* Modified Drawer component */}
+            <Drawer
+              anchor='left'
+              open={open}
+              onClose={() => setOpen(false)}
+              PaperProps={{
+                sx: {
+                  width: 600,
+                  transition: 'transform 0.3s ease',
+                  backgroundColor: '#252a2b',
+                  boxShadow: 24,
+                },
+              }}
+            >
               <Box
                 sx={{
-                  width: 700,
-                  padding: 2,
-                  bgcolor: '#252a2b',
+                  width: 600,
                   height: '100vh',
+                  padding: 2,
                   color: 'white',
-                  display: 'flex', // Enables flexbox
-                  flexDirection: 'column', // Stacks items vertically
-                 
-                  alignItems: 'center', // Centers content horizontally
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
               >
                 <h3>Timer</h3>
-                <Timer /> {/* Display the Timer inside Drawer */}
+                <Timer />
               </Box>
             </Drawer>
           </Box>

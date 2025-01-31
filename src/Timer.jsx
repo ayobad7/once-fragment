@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import '@fontsource/figtree';
 
 const TimerRow = ({ title, index }) => {
@@ -48,12 +49,26 @@ const TimerRow = ({ title, index }) => {
     return () => clearInterval(timer);
   }, [isRunning, timeLeft]);
 
+  useEffect(() => {
+    if (timeLeft === 0) {
+      resetTimer();
+    }
+  }, [timeLeft]);
+
   const resetTimer = () => {
     setTimeLeft(3600);
     setIsRunning(false);
     localStorage.setItem(storageKey, 3600);
     localStorage.setItem(runningKey, 'false');
     localStorage.removeItem(startTimeKey);
+  };
+
+  const handleButtonClick = () => {
+    if (isRunning) {
+      resetTimer();
+    } else {
+      setIsRunning(true);
+    }
   };
 
   const formatTime = (seconds) => {
@@ -89,6 +104,7 @@ const TimerRow = ({ title, index }) => {
           textAlign: 'center',
           fontSize: '1.2rem',
           fontFamily: 'Figtree, sans-serif',
+          color: isRunning ? '#06dbc7' : '#ffffff',
         }}
       >
         {formatTime(timeLeft)}
@@ -96,37 +112,28 @@ const TimerRow = ({ title, index }) => {
       <Box sx={{ display: 'flex', gap: 1 }}>
         <Button
           variant='contained'
-          onClick={() => setIsRunning(true)}
+          onClick={handleButtonClick}
           sx={{
             borderRadius: 0,
-            width: '120px',
+            width: '100px',
             boxShadow: 'none',
-            backgroundColor: '#06dbc7',
+            backgroundColor: isRunning
+              ? timeLeft === 0
+                ? '#d32f2f'
+                : '#1b4e47'
+              : '#06dbc7',
             fontWeight: 'bold',
-            color: 'black',
+            color: isRunning ? (timeLeft === 0 ? '#fff' : '#06dbc7') : 'black',
             '&:hover': {
-              backgroundColor: '#127a72',
+              backgroundColor: isRunning
+                ? timeLeft === 0
+                  ? '#b71c1c'
+                  : '#1e3230'
+                : '#127a72',
             },
           }}
         >
-          Go
-        </Button>
-        <Button
-          variant='contained'
-          onClick={resetTimer}
-          sx={{
-            borderRadius: 0,
-            width: '120px',
-            boxShadow: 'none',
-            backgroundColor: timeLeft === 0 ? '#d32f2f' : '#1b4e47', // Red when time is 0
-            fontWeight: 'bold',
-            color: timeLeft === 0 ? '#fff' : '#06dbc7', // White text on red
-            '&:hover': {
-              backgroundColor: timeLeft === 0 ? '#b71c1c' : '#1e3230', // Darker red on hover
-            },
-          }}
-        >
-          Reset
+          {isRunning ? 'Reset' : <TimerOutlinedIcon />}
         </Button>
       </Box>
     </Box>
@@ -148,7 +155,7 @@ const Timer = () => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: 700,
+        maxWidth: 550,
         margin: '0 auto',
         padding: '16px',
         bgcolor: '#252a2b',
