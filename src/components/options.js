@@ -389,7 +389,7 @@ export const bmodOptions = [
   'Reload Rampage',
   'Unstoppable',
   'Bullet Siphon',
-  'Status Amplification',
+  'Abnormal Increase',
   'Precision Charge',
   'Three Strikes',
   'Elemental Resonance',
