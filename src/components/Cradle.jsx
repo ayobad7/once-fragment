@@ -145,6 +145,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem1C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -188,6 +189,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem2C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -231,6 +233,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem3C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -274,6 +277,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem4C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -317,6 +321,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem5C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -360,6 +365,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem6C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -403,6 +409,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem7C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
@@ -440,6 +447,7 @@ const Cradle = forwardRef(({ onSave, onLoad }, ref) => {
             setSelectedItem={setSelectedItem8C}
             placeholder='Select Cradle'
             customBgColor='#222323'
+            groupByCategory={true}
           />
         </Box>
       </Box>
