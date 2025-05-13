@@ -190,7 +190,7 @@ const generateShareUrl = async (fileName) => {
 
   const fileDocRef = doc(db, 'sharedFiles', uniqueFileName);
   await setDoc(fileDocRef, { data: fileData });
-  const shareableUrl = `${baseUrl}?file=${uniqueFileName}`;
+  const shareableUrl = `${baseUrl}?file=${encodeURIComponent(uniqueFileName)}`;
 
   const urls = { ...fileUrls, [uniqueFileName]: shareableUrl };
   localStorage.setItem('fileUrls', JSON.stringify(urls));
