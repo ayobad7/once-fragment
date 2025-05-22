@@ -177,7 +177,9 @@ export const stat1Options = [
 ];
 export const stat2Options = stat1Options; // Reuse stat1Options
 export const cradleOptions = [
-  { category: 'Gravity', title: 'Place Holder' },
+  { category: 'Starfall', title: 'Tactical Leap' },
+  { category: 'Starfall', title: 'Aerial Supression' },
+  { category: 'Starfall', title: 'Energy Surge' },
   { category: 'Standard', title: 'Anti-Coherance' },
   { category: 'Standard', title: 'Anti-Void' },
   { category: 'Standard', title: 'Anti-Phase' },
