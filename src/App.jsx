@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid'; // Install uuid library
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share'; // Import the share icon
 import html2canvas from 'html2canvas'; // Import the library
-import Timer from './Timer'; // Import Timer component
 import { toPng } from 'html-to-image';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
@@ -278,59 +277,6 @@ const [open, setOpen] = useState(false);
             >
               Snap
             </Button>
-
-            {/* Add this absolutely positioned toggle button */}
-            <IconButton
-              onClick={() => setOpen(!open)}
-              sx={{
-                position: 'fixed',
-                left: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 1300,
-                backgroundColor: '#06dbc7',
-                borderRadius: '0 0 0 0',
-                '&:hover': {
-                  backgroundColor: '#127a72',
-                },
-              }}
-            >
-              {open ? (
-                <ChevronLeftIcon sx={{ color: 'black' }} />
-              ) : (
-                <ChevronRightIcon sx={{ color: 'black' }} />
-              )}
-            </IconButton>
-
-            {/* Modified Drawer component */}
-            <Drawer
-              anchor='left'
-              open={open}
-              onClose={() => setOpen(false)}
-              PaperProps={{
-                sx: {
-                  width: 580,
-                  transition: 'transform 0.3s ease',
-                  backgroundColor: '#252a2b',
-                  boxShadow: 24,
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  width: 580,
-                  height: '100vh',
-                  padding: 2,
-                  color: 'white',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <h3>Timer</h3>
-                <Timer />
-              </Box>
-            </Drawer>
           </Box>
 
           <Modal open={isSaveModalOpen} onClose={() => setSaveModalOpen(false)}>
