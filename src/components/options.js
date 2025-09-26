@@ -23,6 +23,7 @@ export const weaponOptions = [
   { category: 'SMG', title: 'Little Jaws' },
   { category: 'SMG', title: 'Primal Rage' },
   { category: 'SMG', title: 'Icy Rain' },
+  { category: 'SMG', title: 'Holographic Resonance' },
   { category: 'Rifle', title: 'Pioneer' },
   { category: 'Rifle', title: 'Outsider' },
   { category: 'Rifle', title: 'Abyss Glance' },
@@ -34,6 +35,7 @@ export const weaponOptions = [
   { category: 'Sniper', title: 'Crumble' },
   { category: 'Sniper', title: 'Black Panther' },
   { category: 'Sniper', title: 'Bullseye' },
+  { category: 'Sniper', title: 'Pathfinder' },
   { category: 'LMG', title: 'Predator' },
   { category: 'LMG', title: 'Wrath Of Hades' },
   { category: 'LMG', title: 'Mr Squid' },
@@ -353,6 +355,7 @@ export const topOptions = [
   { category: 'Key', title: "Doyen's Cloak" },
   { category: 'Key', title: 'Sleek Leather Jacket' },
   { category: 'Key', title: 'Charmed Mag Top' },
+  { category: 'Key', title: 'Snowdrift Top' },
   ...setItems,
 ];
 export const tmodOptions = [
@@ -402,6 +405,7 @@ export const shoesOptions = [
   { category: 'Key', title: 'Leather Boots' },
   { category: 'Key', title: 'Earthly Boots' },
   { category: 'Key', title: 'Fire Rune Boots' },
+  { category: 'Key', title: 'Bloodstained Tracker Boots' },
   ...setItems,
 ];
 export const smodOptions = [
@@ -453,4 +457,12 @@ export const hideOptions = [
   'Lunar Wolf Skin',
   'Lunar Rabbit Fur',
   'Lunar Wool',
+  'Dreemfuse Rabbit Fur',
+  'Dreemfuse Wolf Skin',
+  'Dreemfuse Cowhide',
+  'Dreemfuse Wool',
+  'Starfall Fox Skin',
+  'Starfall Down',
+  'Starfall Cowhide',
+  'Starfall Crocodile Skin',
 ];
