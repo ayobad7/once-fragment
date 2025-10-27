@@ -34,12 +34,12 @@ import '@fontsource/figtree';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBa3bpn_-864NVUBoSxO7i7WXYCZ6ia29w",
-  authDomain: "once-fragment.firebaseapp.com",
-  projectId: "once-fragment",
-  storageBucket: "once-fragment.firebasestorage.app",
-  messagingSenderId: "472769682297",
-  appId: "1:472769682297:web:a57d4dac5b2677d88e6da8"
+  apiKey: 'AIzaSyBa3bpn_-864NVUBoSxO7i7WXYCZ6ia29w',
+  authDomain: 'once-fragment.firebaseapp.com',
+  projectId: 'once-fragment',
+  storageBucket: 'once-fragment.firebasestorage.app',
+  messagingSenderId: '472769682297',
+  appId: '1:472769682297:web:a57d4dac5b2677d88e6da8',
 };
 
 // Initialize Firebase
@@ -62,6 +62,8 @@ function App() {
     const urls = localStorage.getItem('fileUrls');
     return urls ? JSON.parse(urls) : {};
   });
+
+  const [copiedAttributeEffects, setCopiedAttributeEffects] = useState([]);
 
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isLoadModalOpen, setLoadModalOpen] = useState(false);
@@ -100,38 +102,38 @@ function App() {
     setFileName('');
   };
 
-useEffect(() => {
-  const loadSharedFile = async () => {
-    const sharedFileName = getQueryParam('file'); // Get 'file' query parameter
-    if (sharedFileName) {
-      try {
-        const fileDocRef = doc(db, 'sharedFiles', sharedFileName);
-        const fileSnap = await getDoc(fileDocRef);
+  useEffect(() => {
+    const loadSharedFile = async () => {
+      const sharedFileName = getQueryParam('file'); // Get 'file' query parameter
+      if (sharedFileName) {
+        try {
+          const fileDocRef = doc(db, 'sharedFiles', sharedFileName);
+          const fileSnap = await getDoc(fileDocRef);
 
-        if (fileSnap.exists()) {
-          const fileData = fileSnap.data().data;
-          // Load the fetched data into the form
-          weaponRef.current?.loadData(fileData.weaponData);
-          weapon2Ref.current?.loadData(fileData.weapon2Data);
-          cradleRef.current?.loadData(fileData.cradleData);
-          buffRef.current?.loadData(fileData.buffData);
-          helmetRef.current?.loadData(fileData.helmetData);
-          faceRef.current?.loadData(fileData.faceData);
-          glovesRef.current?.loadData(fileData.glovesData);
-          topRef.current?.loadData(fileData.topData);
-          bottomsRef.current?.loadData(fileData.bottomsData);
-          shoesRef.current?.loadData(fileData.shoesData);
-        } else {
-          console.error('Shared file not found in Firestore.');
+          if (fileSnap.exists()) {
+            const fileData = fileSnap.data().data;
+            // Load the fetched data into the form
+            weaponRef.current?.loadData(fileData.weaponData);
+            weapon2Ref.current?.loadData(fileData.weapon2Data);
+            cradleRef.current?.loadData(fileData.cradleData);
+            buffRef.current?.loadData(fileData.buffData);
+            helmetRef.current?.loadData(fileData.helmetData);
+            faceRef.current?.loadData(fileData.faceData);
+            glovesRef.current?.loadData(fileData.glovesData);
+            topRef.current?.loadData(fileData.topData);
+            bottomsRef.current?.loadData(fileData.bottomsData);
+            shoesRef.current?.loadData(fileData.shoesData);
+          } else {
+            console.error('Shared file not found in Firestore.');
+          }
+        } catch (error) {
+          console.error('Failed to load shared file:', error);
         }
-      } catch (error) {
-        console.error('Failed to load shared file:', error);
       }
-    }
-  };
+    };
 
-  loadSharedFile();
-}, []);
+    loadSharedFile();
+  }, []);
 
   const handleLoad = (selectedFile) => {
     const {
@@ -163,43 +165,45 @@ useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   };
-const handleSnap = async () => {
-  try {
-    const node = document.querySelector('#content-area'); // Adjust the selector to target the area to capture
-    const dataUrl = await toPng(node);
+  const handleSnap = async () => {
+    try {
+      const node = document.querySelector('#content-area'); // Adjust the selector to target the area to capture
+      const dataUrl = await toPng(node);
 
-    // Create a download link and trigger download
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'screenshot.png';
-    link.click();
-  } catch (error) {
-    console.error('Failed to capture screenshot:', error);
-  }
-};
+      // Create a download link and trigger download
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'screenshot.png';
+      link.click();
+    } catch (error) {
+      console.error('Failed to capture screenshot:', error);
+    }
+  };
 
-const generateShareUrl = async (fileName) => {
-  const baseUrl = 'https://fragment-lake.vercel.app/';
-  const fileData = savedFiles[fileName];
+  const generateShareUrl = async (fileName) => {
+    const baseUrl = 'https://fragment-lake.vercel.app/';
+    const fileData = savedFiles[fileName];
 
-  if (!fileData) return;
+    if (!fileData) return;
 
-  const uniqueId = uuidv4(); // Generate a unique ID
-  const uniqueFileName = `${fileName}_${uniqueId}`; // Combine file name with unique ID
+    const uniqueId = uuidv4(); // Generate a unique ID
+    const uniqueFileName = `${fileName}_${uniqueId}`; // Combine file name with unique ID
 
-  const fileDocRef = doc(db, 'sharedFiles', uniqueFileName);
-  await setDoc(fileDocRef, { data: fileData });
-  const shareableUrl = `${baseUrl}?file=${encodeURIComponent(uniqueFileName)}`;
+    const fileDocRef = doc(db, 'sharedFiles', uniqueFileName);
+    await setDoc(fileDocRef, { data: fileData });
+    const shareableUrl = `${baseUrl}?file=${encodeURIComponent(
+      uniqueFileName
+    )}`;
 
-  const urls = { ...fileUrls, [uniqueFileName]: shareableUrl };
-  localStorage.setItem('fileUrls', JSON.stringify(urls));
-  setFileUrls(urls);
+    const urls = { ...fileUrls, [uniqueFileName]: shareableUrl };
+    localStorage.setItem('fileUrls', JSON.stringify(urls));
+    setFileUrls(urls);
 
-  navigator.clipboard.writeText(shareableUrl);
-  alert('Shareable URL copied to clipboard!');
-};
+    navigator.clipboard.writeText(shareableUrl);
+    alert('Shareable URL copied to clipboard!');
+  };
 
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Box id='content-area'>
@@ -489,10 +493,26 @@ const [open, setOpen] = useState(false);
               },
             }}
           >
-            <Weapon ref={weaponRef} />
-            <Weapon2 ref={weapon2Ref} />
-            <Cradle ref={cradleRef} />
-            <Buff ref={buffRef} />
+            <Weapon
+              ref={weaponRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Weapon2
+              ref={weapon2Ref}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Cradle
+              ref={cradleRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Buff
+              ref={buffRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
           </Box>
 
           {/* Second Row: Helmet, Face, and Gloves */}
@@ -519,9 +539,21 @@ const [open, setOpen] = useState(false);
               },
             }}
           >
-            <Helmet ref={helmetRef} />
-            <Face ref={faceRef} />
-            <Gloves ref={glovesRef} />
+            <Helmet
+              ref={helmetRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Face
+              ref={faceRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Gloves
+              ref={glovesRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
           </Box>
 
           {/* Third Row: Top, Bottoms, and Shoes */}
@@ -548,9 +580,21 @@ const [open, setOpen] = useState(false);
               },
             }}
           >
-            <Top ref={topRef} />
-            <Bottoms ref={bottomsRef} />
-            <Shoes ref={shoesRef} />
+            <Top
+              ref={topRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Bottoms
+              ref={bottomsRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
+            <Shoes
+              ref={shoesRef}
+              copiedAttributeEffects={copiedAttributeEffects}
+              setCopiedAttributeEffects={setCopiedAttributeEffects}
+            />
           </Box>
         </Box>
       </ThemeProvider>
